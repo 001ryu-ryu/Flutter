@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onDoubleTap: () {
                         print("I Love you Java");
                       },
-                      child: Text("Click here"))),
+                      child: const Text("Click here"))),
             ),
           ),
         ) // This trailing comma makes auto-formatting nicer for build methods.

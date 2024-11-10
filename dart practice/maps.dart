@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 void main(List<String> args) {
   var mapEg = {'Key1': "Value1", 'Key2': 2, 'Key3': 3.0, 'Key4': true};
