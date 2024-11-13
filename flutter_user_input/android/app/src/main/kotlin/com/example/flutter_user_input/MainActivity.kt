@@ -1,4 +1,4 @@
-package com.example.flutter_styles_and_themes
+package com.example.flutter_user_input
 
 import io.flutter.embedding.android.FlutterActivity
 

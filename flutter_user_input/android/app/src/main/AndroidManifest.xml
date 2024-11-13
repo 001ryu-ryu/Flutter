@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="flutter_styles_and_themes"
+        android:label="flutter_user_input"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
