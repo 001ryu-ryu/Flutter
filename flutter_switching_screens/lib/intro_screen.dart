@@ -15,14 +15,17 @@ class IntroScreen extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          ElevatedButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return MyHomePage(title: "Home");
-            },));
-          }, child: Text("Teleport"))
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return MyHomePage(title: "Home");
+                  },
+                ));
+              },
+              child: Text("Teleport"))
         ],
       ),
     );
   }
-
 }
