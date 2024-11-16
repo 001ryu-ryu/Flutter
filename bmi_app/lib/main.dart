@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'BMI'),
     );
   }
 }
@@ -55,18 +55,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  var wtController = TextEditingController();
+  var ftController = TextEditingController();
+  var inController = TextEditingController();
+   var result = "";
+
+   var bgColor = Colors.purple.shade100;
 
   @override
   Widget build(BuildContext context) {
@@ -86,40 +81,100 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: Container(
+        color: bgColor,
+        child: Center(
+          child: Container(
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Let's calculate your BMI!"),
+                TextField(
+                  decoration: InputDecoration(
+                    label: Text("Enter your weight in KGs"),
+                    prefixIcon: Icon(Icons.monitor_weight)
+                  ),
+                  controller: wtController,
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    label: Text("Enter your height in feet"),
+                    prefixIcon: Icon(Icons.height)
+                  ),
+                  controller: ftController,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                TextField(
+                  controller: inController,
+                  decoration: InputDecoration(
+                    label: Text("Enter your height in inches"),
+                    prefixIcon: Icon(Icons.height),
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple
+                  ),
+                    onPressed: () {
+                    var wt = wtController.text.toString();
+                    var ft = ftController.text.toString();
+                    var inch = inController.text.toString();
+
+                    if(wt!="" && ft!="" && inch!="") {
+                      // BMI calculation here
+                      int iWt = int.parse(wt);
+                      int iFt = int.parse(ft);
+                      int iInch = int.parse(inch);
+
+                      var tInch = (iFt * 12) + iInch;
+                      var tCm = tInch * 2.54;
+                      var tM = tCm/100;
+
+                      var bmi = iWt/(tM*tM);
+
+                      var msg = "";
+
+                      if(bmi > 25) {
+                        msg = "hmm, you need to start dieting";
+                        bgColor = Colors.redAccent;
+                      } else if(bmi < 18) {
+                        msg = "eat well";
+                        bgColor = Colors.red;
+                      } else {
+                        msg = "cool!!";
+                        bgColor = Colors.green;
+                      }
+
+
+                      setState(() {
+                        result = "Your BMI is ${bmi.toStringAsFixed(2)} \n $msg";
+                      });
+
+                    } else {
+                      setState(() {
+                        result = "You did not select something";
+                      });
+                    }
+
+                    }, child: Text("Find out", style: TextStyle(color: Colors.white),)),
+                Text("$result")
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      )
     );
   }
 }
